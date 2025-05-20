@@ -59,15 +59,15 @@ if (!isset($productos)) {
                                 <td colspan="4" class="text-center">No hay productos disponibles</td>
                             </tr>
                         <?php else: ?>
-                            <?php foreach ($productos as $producto): ?>
-                                <tr class="border-bottom">
-                                    <td class="col-2">
+                        <?php foreach ($productos as $producto): ?>
+                            <tr class="border-bottom">
+                                <td class="col-2">
                                         <img src="<?php echo htmlspecialchars($producto['imgProduct1']); ?>" 
                                              alt="<?php echo htmlspecialchars($producto['nombre']); ?>" 
                                              class="img-fluid border">
-                                    </td>
-                                    <td>
-                                        <h6 class="mb-1"><?php echo htmlspecialchars($producto['nombre']); ?></h6>
+                                </td>
+                                <td>
+                                    <h6 class="mb-1"><?php echo htmlspecialchars($producto['nombre']); ?></h6>
                                         <p class="text-muted mb-0">
                                             <span class="text-body">Categoría:</span> 
                                             <?php echo htmlspecialchars($producto['categoria']); ?>
@@ -84,47 +84,47 @@ if (!isset($productos)) {
                                             <span class="text-body">Descripción:</span> 
                                             <?php echo htmlspecialchars($producto['descripcion']); ?>
                                         </p>
-                                    </td>
-                                    <td class="text-end fw-bold">
-                                        $<?php echo number_format($producto['precio'], 2); ?>
-                                    </td>
-                                    <td class="text-end">
-                                        <div class="dropdown">
+                                </td>
+                                <td class="text-end fw-bold">
+                                    $<?php echo number_format($producto['precio'], 2); ?>
+                                </td>
+                                <td class="text-end">
+                                    <div class="dropdown">
                                             <button class="btn btn-sm btn-light border dropdown-toggle" 
                                                     type="button" 
                                                     id="dropdownMenu<?php echo $producto['id']; ?>" 
                                                     data-bs-toggle="dropdown" 
                                                     aria-expanded="false">
-                                                <i class="ri-more-fill"></i>
-                                            </button>
+                                            <i class="ri-more-fill"></i>
+                                        </button>
                                             <ul class="dropdown-menu dropdown-menu-end" 
                                                 aria-labelledby="dropdownMenu<?php echo $producto['id']; ?>">
-                                                <li>
-                                                    <a href="#"
-                                                        class="dropdown-item btnVerProducto"
-                                                        data-bs-toggle="modal"
-                                                        data-bs-target="#modalVerProducto"
-                                                        data-id="<?php echo $producto['id']; ?>"
-                                                        data-nombre="<?php echo htmlspecialchars($producto['nombre']); ?>"
-                                                        data-categoria="<?php echo htmlspecialchars($producto['categoria']); ?>"
-                                                        data-talla="<?php echo htmlspecialchars($producto['talla']); ?>"
+                                            <li>
+                                                <a href="#"
+                                                    class="dropdown-item btnVerProducto"
+                                                    data-bs-toggle="modal"
+                                                    data-bs-target="#modalVerProducto"
+                                                    data-id="<?php echo $producto['id']; ?>"
+                                                    data-nombre="<?php echo htmlspecialchars($producto['nombre']); ?>"
+                                                    data-categoria="<?php echo htmlspecialchars($producto['categoria']); ?>"
+                                                    data-talla="<?php echo htmlspecialchars($producto['talla']); ?>"
                                                         data-stock="<?php echo htmlspecialchars($producto['cantidad']); ?>"
-                                                        data-descripcion="<?php echo htmlspecialchars($producto['descripcion']); ?>"
-                                                        data-precio="<?php echo number_format($producto['precio'], 2); ?>"
+                                                    data-descripcion="<?php echo htmlspecialchars($producto['descripcion']); ?>"
+                                                    data-precio="<?php echo number_format($producto['precio'], 2); ?>"
                                                         data-imagen="<?php echo htmlspecialchars($producto['imgProduct1']); ?>">
-                                                        Ver
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a href="#"
-                                                        class="dropdown-item btnEditarProducto"
-                                                        data-id="<?php echo $producto['id']; ?>"
-                                                        data-nombre="<?php echo htmlspecialchars($producto['nombre'], ENT_QUOTES); ?>"
-                                                        data-categoria="<?php echo htmlspecialchars($producto['categoria'], ENT_QUOTES); ?>"
-                                                        data-talla="<?php echo htmlspecialchars($producto['talla'], ENT_QUOTES); ?>"
+                                                    Ver
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="#"
+                                                    class="dropdown-item btnEditarProducto"
+                                                    data-id="<?php echo $producto['id']; ?>"
+                                                    data-nombre="<?php echo htmlspecialchars($producto['nombre'], ENT_QUOTES); ?>"
+                                                    data-categoria="<?php echo htmlspecialchars($producto['categoria'], ENT_QUOTES); ?>"
+                                                    data-talla="<?php echo htmlspecialchars($producto['talla'], ENT_QUOTES); ?>"
                                                         data-stock="<?php echo htmlspecialchars($producto['cantidad'], ENT_QUOTES); ?>"
-                                                        data-precio="<?php echo htmlspecialchars($producto['precio'], ENT_QUOTES); ?>"
-                                                        data-descripcion="<?php echo htmlspecialchars($producto['descripcion'], ENT_QUOTES); ?>"
+                                                    data-precio="<?php echo htmlspecialchars($producto['precio'], ENT_QUOTES); ?>"
+                                                    data-descripcion="<?php echo htmlspecialchars($producto['descripcion'], ENT_QUOTES); ?>"
                                                         data-bs-toggle="modal" 
                                                         data-bs-target="#modalEditarProducto">
                                                         Editar
@@ -136,12 +136,12 @@ if (!isset($productos)) {
                                                        onclick="return confirm('¿Seguro que deseas eliminar este producto?');">
                                                         Eliminar
                                                     </a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </td>
-                                </tr>
-                            <?php endforeach; ?>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
                         <?php endif; ?>
                     </tbody>
                 </table>
