@@ -3,7 +3,6 @@
 require_once __DIR__ . '/vendor/autoload.php';
 
 use Helirome\MvcCrudProducto\Controllers\FrontController;
-
 // Inicializar la aplicación
 try {
     $app = new FrontController();

@@ -1,3 +1,9 @@
+<?php
+// Asegurarnos de que $productos esté definido
+if (!isset($productos)) {
+    $productos = [];
+}
+?>
 <!doctype html>
 <html lang="es">
 
@@ -14,33 +20,7 @@
 
     <!-- Links Estilos -->
     <?php include_once __DIR__ . '/../config/components/initComponent.php'; ?>
-    <?php echo $varHeader;
-    $productos = [
-        [
-            "id" => "1234566",
-            "categoria" => "Camiseta",
-            "nombre" => "Camiseta Japón - OSAKA",
-            "talla" => "M",
-            "stock" => 4,
-            "precio" => 85.00,
-            "descripcion" => "Hecho de 100% algodón orgánico.",
-            "imagenes" => [
-                "./src/assets/images/products/product-page-1.jpeg"
-            ]
-        ],
-        [
-            "id" => "7896541",
-            "categoria" => "Zapatillas",
-            "nombre" => "Nike ZoomX Vaporfly",
-            "talla" => "11",
-            "stock" => 5,
-            "precio" => 125.00,
-            "descripcion" => "Diseñado para velocidad y confort",
-            "imagenes" => [
-                "./src/assets/images/products/product-cart-2.jpg"
-            ]
-        ]
-    ]; ?>
+    <?php echo $varHeader; ?>
 
     <!-- Fix for custom scrollbar if JS is disabled-->
     <noscript>
@@ -55,7 +35,7 @@
     </noscript>
 
     <!-- Page Title -->
-    <title>Bruz Deporte | Plantilla HTML Bootstrap 5</title>
+    <title>Bruz Deporte | Gestión de Productos</title>
 
 </head>
 
@@ -74,62 +54,95 @@
                 </div>
                 <table class="table align-middle">
                     <tbody>
-                        <?php foreach ($productos as $producto): ?>
-                            <tr class="border-bottom">
-                                <td class="col-2">
-                                    <img src="<?php echo $producto['imagenes'][0]; ?>" alt="<?php echo htmlspecialchars($producto['nombre']); ?>" class="img-fluid border">
-                                </td>
-                                <td>
-                                    <h6 class="mb-1"><?php echo htmlspecialchars($producto['nombre']); ?></h6>
-                                    <p class="text-muted mb-0"><span class="text-body">Categoría:</span> <?php echo htmlspecialchars($producto['categoria']); ?></p>
-                                    <p class="text-muted mb-0"><span class="text-body">Talla:</span> <?php echo htmlspecialchars($producto['talla']); ?></p>
-                                    <p class="text-muted mb-0"><span class="text-body">Stock:</span> <?php echo htmlspecialchars($producto['stock']); ?></p>
-                                    <p class="text-muted mb-0"><span class="text-body">Descripción:</span> <?php echo htmlspecialchars($producto['descripcion']); ?></p>
-                                </td>
-                                <td class="text-end fw-bold">
-                                    $<?php echo number_format($producto['precio'], 2); ?>
-                                </td>
-                                <td class="text-end">
-                                    <div class="dropdown">
-                                        <button class="btn btn-sm btn-light border dropdown-toggle" type="button" id="dropdownMenu<?php echo $producto['id']; ?>" data-bs-toggle="dropdown" aria-expanded="false">
-                                            <i class="ri-more-fill"></i>
-                                        </button>
-                                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenu<?php echo $producto['id']; ?>">
-                                            <li>
-                                                <a href="#"
-                                                    class="dropdown-item btnVerProducto"
-                                                    data-bs-toggle="modal"
-                                                    data-bs-target="#modalVerProducto"
-                                                    data-id="<?php echo $producto['id']; ?>"
-                                                    data-nombre="<?php echo htmlspecialchars($producto['nombre']); ?>"
-                                                    data-categoria="<?php echo htmlspecialchars($producto['categoria']); ?>"
-                                                    data-talla="<?php echo htmlspecialchars($producto['talla']); ?>"
-                                                    data-stock="<?php echo htmlspecialchars($producto['stock']); ?>"
-                                                    data-descripcion="<?php echo htmlspecialchars($producto['descripcion']); ?>"
-                                                    data-precio="<?php echo number_format($producto['precio'], 2); ?>"
-                                                    data-imagen="<?php echo $producto['imagenes'][0]; ?>">
-                                                    Ver
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="#"
-                                                    class="dropdown-item btnEditarProducto"
-                                                    data-id="<?php echo $producto['id']; ?>"
-                                                    data-nombre="<?php echo htmlspecialchars($producto['nombre'], ENT_QUOTES); ?>"
-                                                    data-categoria="<?php echo htmlspecialchars($producto['categoria'], ENT_QUOTES); ?>"
-                                                    data-talla="<?php echo htmlspecialchars($producto['talla'], ENT_QUOTES); ?>"
-                                                    data-stock="<?php echo htmlspecialchars($producto['stock'], ENT_QUOTES); ?>"
-                                                    data-precio="<?php echo htmlspecialchars($producto['precio'], ENT_QUOTES); ?>"
-                                                    data-descripcion="<?php echo htmlspecialchars($producto['descripcion'], ENT_QUOTES); ?>"
-                                                    data-bs-toggle="modal" data-bs-target="#modalEditarProducto">Editar</a>
-                                            </li>
-
-                                            <li><a class="dropdown-item text-danger" href="./?url=producto_eliminar&id=<?php echo $producto['id']; ?>" onclick="return confirm('¿Seguro que deseas eliminar este producto?');">Eliminar</a></li>
-                                        </ul>
-                                    </div>
-                                </td>
+                        <?php if (empty($productos)): ?>
+                            <tr>
+                                <td colspan="4" class="text-center">No hay productos disponibles</td>
                             </tr>
-                        <?php endforeach; ?>
+                        <?php else: ?>
+                            <?php foreach ($productos as $producto): ?>
+                                <tr class="border-bottom">
+                                    <td class="col-2">
+                                        <img src="<?php echo htmlspecialchars($producto['imgProduct1']); ?>" 
+                                             alt="<?php echo htmlspecialchars($producto['nombre']); ?>" 
+                                             class="img-fluid border">
+                                    </td>
+                                    <td>
+                                        <h6 class="mb-1"><?php echo htmlspecialchars($producto['nombre']); ?></h6>
+                                        <p class="text-muted mb-0">
+                                            <span class="text-body">Categoría:</span> 
+                                            <?php echo htmlspecialchars($producto['categoria']); ?>
+                                        </p>
+                                        <p class="text-muted mb-0">
+                                            <span class="text-body">Talla:</span> 
+                                            <?php echo htmlspecialchars($producto['talla']); ?>
+                                        </p>
+                                        <p class="text-muted mb-0">
+                                            <span class="text-body">Stock:</span> 
+                                            <?php echo htmlspecialchars($producto['cantidad']); ?>
+                                        </p>
+                                        <p class="text-muted mb-0">
+                                            <span class="text-body">Descripción:</span> 
+                                            <?php echo htmlspecialchars($producto['descripcion']); ?>
+                                        </p>
+                                    </td>
+                                    <td class="text-end fw-bold">
+                                        $<?php echo number_format($producto['precio'], 2); ?>
+                                    </td>
+                                    <td class="text-end">
+                                        <div class="dropdown">
+                                            <button class="btn btn-sm btn-light border dropdown-toggle" 
+                                                    type="button" 
+                                                    id="dropdownMenu<?php echo $producto['id']; ?>" 
+                                                    data-bs-toggle="dropdown" 
+                                                    aria-expanded="false">
+                                                <i class="ri-more-fill"></i>
+                                            </button>
+                                            <ul class="dropdown-menu dropdown-menu-end" 
+                                                aria-labelledby="dropdownMenu<?php echo $producto['id']; ?>">
+                                                <li>
+                                                    <a href="#"
+                                                        class="dropdown-item btnVerProducto"
+                                                        data-bs-toggle="modal"
+                                                        data-bs-target="#modalVerProducto"
+                                                        data-id="<?php echo $producto['id']; ?>"
+                                                        data-nombre="<?php echo htmlspecialchars($producto['nombre']); ?>"
+                                                        data-categoria="<?php echo htmlspecialchars($producto['categoria']); ?>"
+                                                        data-talla="<?php echo htmlspecialchars($producto['talla']); ?>"
+                                                        data-stock="<?php echo htmlspecialchars($producto['cantidad']); ?>"
+                                                        data-descripcion="<?php echo htmlspecialchars($producto['descripcion']); ?>"
+                                                        data-precio="<?php echo number_format($producto['precio'], 2); ?>"
+                                                        data-imagen="<?php echo htmlspecialchars($producto['imgProduct1']); ?>">
+                                                        Ver
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a href="#"
+                                                        class="dropdown-item btnEditarProducto"
+                                                        data-id="<?php echo $producto['id']; ?>"
+                                                        data-nombre="<?php echo htmlspecialchars($producto['nombre'], ENT_QUOTES); ?>"
+                                                        data-categoria="<?php echo htmlspecialchars($producto['categoria'], ENT_QUOTES); ?>"
+                                                        data-talla="<?php echo htmlspecialchars($producto['talla'], ENT_QUOTES); ?>"
+                                                        data-stock="<?php echo htmlspecialchars($producto['cantidad'], ENT_QUOTES); ?>"
+                                                        data-precio="<?php echo htmlspecialchars($producto['precio'], ENT_QUOTES); ?>"
+                                                        data-descripcion="<?php echo htmlspecialchars($producto['descripcion'], ENT_QUOTES); ?>"
+                                                        data-bs-toggle="modal" 
+                                                        data-bs-target="#modalEditarProducto">
+                                                        Editar
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a class="dropdown-item text-danger" 
+                                                       href="?url=product/delete&id=<?php echo $producto['id']; ?>" 
+                                                       onclick="return confirm('¿Seguro que deseas eliminar este producto?');">
+                                                        Eliminar
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
+                        <?php endif; ?>
                     </tbody>
                 </table>
             </div>
@@ -180,7 +193,7 @@
     <div class="modal fade" id="modalAgregarProducto" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
-                <form action="?url=product/agregar" method="POST" enctype="multipart/form-data">
+                <form action="?url=product/create" method="POST" enctype="multipart/form-data">
                     <div class="modal-header">
                         <h5 class="modal-title" id="modalLabel">Agregar Producto</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
@@ -188,7 +201,6 @@
 
                     <div class="modal-body">
                         <div class="row g-3">
-
                             <!-- Nombre -->
                             <div class="col-12">
                                 <div class="form-floating">
@@ -200,10 +212,10 @@
                             <!-- Categoría -->
                             <div class="col-12">
                                 <div class="form-floating">
-                                    <select class="form-select rounded-1 " id="categoriaProducto" name="categoria" required>
+                                    <select class="form-select rounded-1" id="categoriaProducto" name="categoria" required>
+                                        <option value="">Seleccione una categoría</option>
                                         <option value="Camiseta">Camiseta</option>
                                         <option value="Pantalón">Pantalón</option>
-                                        <!-- Puedes agregar más categorías aquí -->
                                     </select>
                                     <label for="categoriaProducto">Categoría</label>
                                 </div>
@@ -212,7 +224,8 @@
                             <!-- Talla -->
                             <div class="col-12">
                                 <div class="form-floating">
-                                    <select class="form-select rounded-1 " id="tallaProducto" name="talla" required>
+                                    <select class="form-select rounded-1" id="tallaProducto" name="talla" required>
+                                        <option value="">Seleccione una talla</option>
                                         <option value="S">S</option>
                                         <option value="M">M</option>
                                         <option value="L">L</option>
@@ -225,7 +238,7 @@
                             <!-- Descripción -->
                             <div class="col-12">
                                 <div class="form-floating">
-                                    <textarea class="form-control rounded-1 " id="descripcionProducto" name="descripcion" style="height: 100px" required></textarea>
+                                    <textarea class="form-control rounded-1" id="descripcionProducto" name="descripcion" style="height: 100px" required></textarea>
                                     <label for="descripcionProducto">Descripción</label>
                                 </div>
                             </div>
@@ -233,9 +246,9 @@
                             <!-- Precio -->
                             <div class="col-12">
                                 <div class="input-group border-dark rounded-1">
-                                    <span class="input-group-text bg-transparent  rounded-start">$</span>
+                                    <span class="input-group-text bg-transparent rounded-start">$</span>
                                     <div class="form-floating flex-grow-1">
-                                        <input type="number" class="form-control  rounded-0" id="precioProducto" name="precio" step="0.01" placeholder="Precio" required>
+                                        <input type="number" class="form-control rounded-0" id="precioProducto" name="precio" step="0.01" min="0" placeholder="Precio" required>
                                         <label for="precioProducto">Precio</label>
                                     </div>
                                 </div>
@@ -244,7 +257,7 @@
                             <!-- Stock -->
                             <div class="col-12">
                                 <div class="form-floating">
-                                    <input type="number" class="form-control rounded-1" id="stockProducto" name="stock" placeholder="Stock disponible" min="0" required>
+                                    <input type="number" class="form-control rounded-1" id="stockProducto" name="cantidad" placeholder="Stock disponible" min="0" required>
                                     <label for="stockProducto">Stock disponible</label>
                                 </div>
                             </div>
@@ -252,9 +265,9 @@
                             <!-- Imagen -->
                             <div class="col-12">
                                 <label for="imagenProducto" class="form-label">Imagen del producto</label>
-                                <input type="file" class="form-control  rounded-1" id="imagenProducto" name="imagen">
+                                <input type="file" class="form-control rounded-1" id="imagenProducto" name="imgProduct1" accept="image/*" required>
+                                <small class="text-muted">Formatos permitidos: JPG, PNG, GIF. Tamaño máximo: 2MB</small>
                             </div>
-
                         </div>
                     </div>
 
@@ -262,7 +275,6 @@
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
                         <button type="submit" class="btn btn-primary">Guardar</button>
                     </div>
-
                 </form>
             </div>
         </div>
@@ -337,7 +349,7 @@
     <div class="modal fade" id="modalEditarProducto" tabindex="-1" aria-labelledby="modalEditarProductoLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
-                <form action="?url=product/editar" method="POST" enctype="multipart/form-data" id="formEditarProducto">
+                <form action="?url=product/update" method="POST" enctype="multipart/form-data" id="formEditarProducto">
                     <input type="hidden" name="id" id="editarProductoId" />
                     <div class="modal-header">
                         <h5 class="modal-title" id="modalEditarProductoLabel">Editar Producto</h5>
@@ -346,7 +358,6 @@
 
                     <div class="modal-body">
                         <div class="row g-3">
-
                             <!-- Nombre -->
                             <div class="col-12">
                                 <div class="form-floating">
@@ -359,9 +370,9 @@
                             <div class="col-12">
                                 <div class="form-floating">
                                     <select class="form-select rounded-1" id="editarCategoriaProducto" name="categoria" required>
+                                        <option value="">Seleccione una categoría</option>
                                         <option value="Camiseta">Camiseta</option>
                                         <option value="Pantalón">Pantalón</option>
-                                        <!-- Más categorías -->
                                     </select>
                                     <label for="editarCategoriaProducto">Categoría</label>
                                 </div>
@@ -371,6 +382,7 @@
                             <div class="col-12">
                                 <div class="form-floating">
                                     <select class="form-select rounded-1" id="editarTallaProducto" name="talla" required>
+                                        <option value="">Seleccione una talla</option>
                                         <option value="S">S</option>
                                         <option value="M">M</option>
                                         <option value="L">L</option>
@@ -393,7 +405,7 @@
                                 <div class="input-group border-dark rounded-1">
                                     <span class="input-group-text bg-transparent rounded-start">$</span>
                                     <div class="form-floating flex-grow-1">
-                                        <input type="number" class="form-control rounded-0" id="editarPrecioProducto" name="precio" step="0.01" placeholder="Precio" required>
+                                        <input type="number" class="form-control rounded-0" id="editarPrecioProducto" name="precio" step="0.01" min="0" placeholder="Precio" required>
                                         <label for="editarPrecioProducto">Precio</label>
                                     </div>
                                 </div>
@@ -402,7 +414,7 @@
                             <!-- Stock -->
                             <div class="col-12">
                                 <div class="form-floating">
-                                    <input type="number" class="form-control rounded-1" id="editarStockProducto" name="stock" placeholder="Stock disponible" min="0" required>
+                                    <input type="number" class="form-control rounded-1" id="editarStockProducto" name="cantidad" placeholder="Stock disponible" min="0" required>
                                     <label for="editarStockProducto">Stock disponible</label>
                                 </div>
                             </div>
@@ -410,9 +422,9 @@
                             <!-- Imagen -->
                             <div class="col-12">
                                 <label for="editarImagenProducto" class="form-label">Cambiar Imagen (opcional)</label>
-                                <input type="file" class="form-control rounded-1" id="editarImagenProducto" name="imagen">
+                                <input type="file" class="form-control rounded-1" id="editarImagenProducto" name="imgProduct1" accept="image/*">
+                                <small class="text-muted">Formatos permitidos: JPG, PNG, GIF. Tamaño máximo: 2MB</small>
                             </div>
-
                         </div>
                     </div>
 
@@ -420,7 +432,6 @@
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
                         <button type="submit" class="btn btn-primary">Guardar Cambios</button>
                     </div>
-
                 </form>
             </div>
         </div>
